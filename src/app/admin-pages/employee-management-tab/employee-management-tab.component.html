@@ -1,0 +1,147 @@
+<nav class="navbar navbar.light bg-success">
+    <div class="container-fluid">
+        <h1>EMPLOYEE MANAGEMENT Tab</h1>
+        <div class="d-flex">
+            <button  type="button" (click)="clickAddEmploye()"  data-bs-toggle="modal" data-bs-target="#exampleModal"class="btn btn-dark"><i class="bi bi-plus"></i>Create Employee</button>
+       </div>
+    </div>
+   
+    <form class="d-flex">
+      <!-- <input [(ngModel)]="EmployeeIdFilter" class="form-control"
+      (keyup)="FilterFn()" placeholder="Filter"> -->
+
+      <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-dark-outline-success" type="submit" (click)="sortResult('EmployeeId',true)">Search</button>
+    </form>
+  </nav>
+
+
+<table class="table ">
+    <thead>
+        <tr class="table-warning">
+            <th scope="col">Employee ID</th>
+            <th scope="col">Employee_name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mobile Number</th>
+            <th scope="col">Designation</th>
+            <th scope="col">WorkLocation</th>
+            <th scope="col">Reporting_to</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <tr *ngFor="let row of employeeData">
+            <td>{{row.id}}</td> 
+            <td>{{row.full_name}}</td>
+            <td>{{row.email}}</td>  
+            <td>{{row.contact_number}}</td> 
+            <td>{{row.position}}</td> 
+            <td>{{row.work_location}}</td>
+            <td>{{row.reporting_to}}</td>
+            <td class="table-danger">
+              <button  (click)="updateEmployeeDetails()" class="btn btn-info" >Update</button>
+              <button (click)="deleteEmployee(row)" class="btn btn-danger mx-3" >Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+  <!-- Modal-->
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Employee Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="formValue" (ngSubmit)="onSubmit()">
+
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label"> Employee_name</label>
+                  <input type="text" class="form-control"  formControlName="full_name" >
+                  
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label"> Username</label>
+                  <input type="text" class="form-control"  formControlName="username" >
+                  
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label"> Password</label>
+                  <input type="text" class="form-control"  formControlName="password" >
+                </div>
+
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label"> Email</label>
+                 
+                  <input type="text" class="form-control"  formControlName="email" >
+                  <span *ngIf="email.invalid && formControlName.touched">please enter a valid input</span>
+                </div>
+
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Contact_Number</label>
+                  <input type="text" class="form-control"  formControlName="contact_number" >
+                </div>
+
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Emergency_ContactNumber</label>
+                  <input type="text" class="form-control"  formControlName="emergency_contact_number" >
+                </div>
+                
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Position</label>
+                  <input type="text" class="form-control"  formControlName="position" >
+                </div>
+
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">MaritalStatus</label>
+                  <input type="text" class="form-control"  formControlName="marital_status" >
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Blood_Group</label>
+                  <input type="text" class="form-control"  formControlName="blood_group" >
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">JobTitle</label>
+                  <input type="text" class="form-control" formControlName="job_title">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">WorkLocation</label>
+                  <input type="text" class="form-control"  formControlName="work_location">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">DateOfJoining</label>
+                    <input type="date" class="form-control"  formControlName="date_of_join" >
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Reporting_to</label>
+                    <input type="text" class="form-control"  formControlName="reporting_to" >   
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Linkedin_Link</label>
+                  <input type="url"   class="form-control"  formControlName="linkedin_link" >
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">dob</label>
+                  <input type="date"   class="form-control"  formControlName="dob" >
+                </div>
+
+                <!-- <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">profile_pic</label>
+                  <input type="file"   class="form-control"  formControlName="profile_pic">
+                </div> -->
+                
+              </form>
+        <div class="modal-footer">
+          <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" *ngIf="showAdd" (click)="postEmployeeDetails()"  class="btn btn-primary" >Add</button>
+          <button type="button" *ngIf="showUpdate" (click)="updateEmployeeDetails()" class="btn btn-primary" >Update</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+   
+ 
